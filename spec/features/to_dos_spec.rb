@@ -4,8 +4,7 @@ feature "ToDos" do
 
     expect(page).to have_content "Welcome, hunta"
 
-    fill_in "What do you need to do?", with: "Get a haircut"
-    click_button "Add ToDo"
+    add_todo("Get a haircut")
 
     expect(page).to have_content "ToDo added"
 
@@ -15,7 +14,8 @@ feature "ToDos" do
   end
 
   scenario "A user can edit a ToDo" do
-    
+    register_and_signin_user("sean")
+
   end
 end
 
@@ -33,4 +33,9 @@ def register_and_signin_user(name)
   fill_in "Password", with: "pazzword"
 
   click_button "Sign In"
+end
+
+def add_todo(todo)
+  fill_in "What do you need to do?", with: todo
+  click_button "Add ToDo"
 end
