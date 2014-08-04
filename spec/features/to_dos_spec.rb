@@ -32,6 +32,19 @@ feature "ToDos" do
     expect(page).to have_content("Check if the test passed")
     expect(page).to_not have_button("Update ToDo")
   end
+
+  scenario "User can complete a ToDo item" do
+    register_and_signin_user("sean")
+    add_todo("Let a user finish the todo")
+
+    expect(page).to have_link("Complete")
+    expect(page).to have_content("Let a user finish the todo")
+
+    click_link("Complete")
+
+    expect(page).to have_content("ToDo completed")
+    expect(page).to_not have_content("Let a user finish the todo")
+  end
 end
 
 ## helper methods

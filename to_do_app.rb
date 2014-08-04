@@ -67,6 +67,16 @@ class ToDoApp < Sinatra::Application
     redirect "/"
   end
 
+  get "/todo/:id/complete" do
+    id = params[:id]
+    @todo = ToDoItem.find(id)
+    @todo.destroy
+
+    flash[:notice] = "ToDo completed"
+
+    redirect "/"
+  end
+
   get "/todo/:id/edit" do
     id = params[:id]
     @todo = ToDoItem.find(id)
