@@ -19,7 +19,7 @@ class ToDoApp < Sinatra::Application
       user = current_user
 
       users = User.where("id != #{user.id}")
-      todos = ToDoItem.all
+      todos = ToDoItem.where(user_id: user.id)
       erb :signed_in, locals: {current_user: user, users: users, todos: todos}
     else
       erb :signed_out
@@ -60,7 +60,7 @@ class ToDoApp < Sinatra::Application
   end
 
   post "/todos" do
-    ToDoItem.create(body: params[:body])
+    ToDoItem.create(body: params[:body], user_id: current_user.id)
 
     flash[:notice] = "ToDo added"
 

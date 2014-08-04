@@ -45,6 +45,23 @@ feature "ToDos" do
     expect(page).to have_content("ToDo completed")
     expect(page).to_not have_content("Let a user finish the todo")
   end
+
+  scenario "User should only see their own ToDo items" do
+    register_and_signin_user("sean")
+    add_todo("Fix a bug")
+    click_button("Sign Out")
+
+    expect(page).to have_content("Sign In")
+
+    register_and_signin_user("Henry")
+
+    expect(page).to_not have_content("Fix a bug")
+
+    add_todo("Henry's task")
+
+    expect(page).to_not have_content("Fix a bug")
+    expect(page).to have_content("Henry's task")
+  end
 end
 
 ## helper methods
