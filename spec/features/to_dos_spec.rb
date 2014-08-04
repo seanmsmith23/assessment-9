@@ -15,9 +15,26 @@ feature "ToDos" do
 
   scenario "A user can edit a ToDo" do
     register_and_signin_user("sean")
+    add_todo("Make an edit button")
 
+    expect(page).to have_link("Edit")
+
+    click_link("Edit")
+
+    expect(page).to have_content("Description")
+    expect(find_field('description').value).to eq('Make an edit button')
+    expect(page).to have_button("Update ToDo")
+
+    fill_in "description", with: "Check if the test passed"
+    click_button("Update ToDo")
+
+    expect(page).to have_content("ToDo updated")
+    expect(page).to have_content("Check if the test passed")
+    expect(page).to_not have_button("Update ToDo")
   end
 end
+
+## helper methods
 
 def register_and_signin_user(name)
   visit "/"

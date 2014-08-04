@@ -1,0 +1,8 @@
+<h2>Edit This ToDo Item</h2>
+
+<form action="/todo/<%= todo.id %>" method="post">
+  <label for="description">Description</label><br>
+  <input type="hidden" name="_method" value="patch">
+  <input type="text" name="description" id="description" value="<%= todo.body %>" style="width:300px"><br>
+  <button>Update ToDo</button>
+</form>

@@ -67,6 +67,25 @@ class ToDoApp < Sinatra::Application
     redirect "/"
   end
 
+  get "/todo/:id/edit" do
+    id = params[:id]
+    @todo = ToDoItem.find(id)
+
+    erb :edit_todo, locals: { :todo => @todo }
+  end
+
+  patch "/todo/:id" do
+    id = params[:id]
+    new_todo = params[:description]
+    @todo = ToDoItem.find(id)
+    @todo.body = new_todo
+    @todo.save
+
+    flash[:notice] = "ToDo updated"
+
+    redirect "/"
+  end
+
   private
 
   def authenticate_user
